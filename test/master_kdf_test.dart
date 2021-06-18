@@ -30,7 +30,6 @@ void main() {
     var key = ScryptWithMasterKeyDerivation(n, r, p, login, masterKey)
         .derive(passphrase, salt, keyLength);
 
-    print(key.hex());
     expect(key, expectedKey);
   });
 }

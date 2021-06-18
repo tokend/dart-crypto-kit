@@ -1,6 +1,23 @@
 # TokenD Dart crypto kit
 
 Crypto kit is a set of wrappers for third-party crypto libraries. It simplifies usage of crypto in TokenD-related projects by separating it's actual implementation.
+##Cipher
+
+Cipher module contains ciphers required for TokenD. Currently the only used cipher is `AES-256-GCM`.
+
+Based on [Pointy Castle](https://github.com/bcgit/pc-dart).
+
+Usage example:
+```dart
+List<int> dataList = 'TokenD is awesome'.codeUnits;
+
+  Uint8List data = Uint8List.fromList(dataList);
+  var key = "2e0c7a28545d4c53a1f4b9ef82245d7da853c7f0b0ae949040faedaa60c23c0b"
+      .toUint8list();
+  var iv = base64Decode("dcDptDqlQv7tWIT2");
+
+  var encryptedData = Aes256GCM(iv).encrypt(data, key);
+```
 
 ## KDF
 

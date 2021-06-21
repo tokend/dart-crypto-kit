@@ -19,6 +19,18 @@ List<int> dataList = 'TokenD is awesome'.codeUnits;
   var encryptedData = Aes256GCM(iv).encrypt(data, key);
 ```
 
+##EcDSA
+
+EcDSA module contains elliptic curve cryptography used in TokenD. It provides signing on `Ed25519` curve with `SHA-256` hashing.
+
+Usage example:
+```dart
+Uint8List data = Uint8List.fromList('TokenD is awesome'.codeUnits);
+var keyPair = EcDSAKeyPair.random();
+var signature = EcDSAKeyPair.sign(data, keyPair.seed);
+var isVerified = keyPair.verify(data, signature);
+```
+
 ## KDF
 
 KDF module contains key derivation functions used in TokenD. It provides classical `scrypt` implementation and it's special modification used for [wallet ID and wallet key derivation](https://tokend.gitlab.io/docs/?http#wallet-id-derivation).

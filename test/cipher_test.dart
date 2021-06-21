@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:dart_crypto_kit/crypto_cipher/cipher.dart';
+import 'package:dart_crypto_kit/crypto_cipher/aes256gcm.dart';
 import 'package:dart_crypto_kit/extensions/hex.dart';
 import 'package:flutter_test/flutter_test.dart';
 

@@ -16,6 +16,7 @@ dependencies:
       url: https://github.com/bcgit/pc-dart.git
       ref: master
   cryptography: ^2.0.1
+  base16: ^2.0.2
 
 dependency_overrides:
   convert: any

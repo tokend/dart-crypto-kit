@@ -31,8 +31,16 @@ class EcDSAKeyPair {
     return EcDSAKeyPair(pubKey, privateKey, seed);
   }
 
+  /// Verifies signature for provided data with public key
+  /// @return [true] if the signature is valid, [false] otherwise
+  static Future<bool> verify(
+      Uint8List data, List<int> signature, SimplePublicKey publicKey) async {
+    return algorithm.verify(data.toList(),
+        signature: Signature(signature, publicKey: publicKey));
+  }
+
   /// Signs given data with private key if keypair has it
-  static Future<List> sign(Uint8List data, List<int> seed) async {
+  Future<List> sign(Uint8List data) async {
     var keyPair = await algorithm.newKeyPairFromSeed(seed);
     var signature = await algorithm.sign(data.toList(), keyPair: keyPair);
 
@@ -51,12 +59,5 @@ class EcDSAKeyPair {
   ///See [EcDSAKeyPair.destroy]
   bool isDestroyed() {
     return privateKey == null;
-  }
-
-  /// Verifies signature for provided data with public key
-  /// @return [true] if the signature is valid, [false] otherwise
-  Future<bool> verify(Uint8List data, List<int> signature) async {
-    return algorithm.verify(data.toList(),
-        signature: Signature(signature, publicKey: publicKey));
   }
 }

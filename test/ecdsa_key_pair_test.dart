@@ -27,18 +27,21 @@ void main() {
 
   test('verifyValid', () async {
     var keyPair = await EcDSAKeyPair.fromPrivateKeySeed(privateKeySeed);
-    var isVerified = await keyPair.verify(data, dataSignature);
+    var isVerified =
+        await EcDSAKeyPair.verify(data, dataSignature, keyPair.publicKey);
     expect(isVerified, true);
   });
 
   test('verifyInvalid', () async {
     var keyPair = await EcDSAKeyPair.fromPrivateKeySeed(privateKeySeed);
-    var isVerified = await keyPair.verify(Uint8List(64), Uint8List(64));
+    var isVerified = await EcDSAKeyPair.verify(
+        Uint8List(64), Uint8List(64), keyPair.publicKey);
     expect(isVerified, false);
   });
 
   test('sign', () async {
-    var signature = await EcDSAKeyPair.sign(data, privateKeySeed);
+    var keyPair = await EcDSAKeyPair.fromPrivateKeySeed(privateKeySeed);
+    var signature = await keyPair.sign(data);
     expect(signature, dataSignature);
   });
 

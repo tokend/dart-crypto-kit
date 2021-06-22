@@ -27,8 +27,8 @@ Usage example:
 ```dart
 Uint8List data = Uint8List.fromList('TokenD is awesome'.codeUnits);
 var keyPair = EcDSAKeyPair.random();
-var signature = EcDSAKeyPair.sign(data, keyPair.seed);
-var isVerified = keyPair.verify(data, signature);
+var signature = keyPair.sign(data);
+var isVerified = EcDSAKeyPair.verify(data, signature, keyPair.publicKey);
 ```
 
 ## KDF

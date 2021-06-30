@@ -7,8 +7,8 @@ import 'package:pointycastle/export.dart';
 class ScryptWithMasterKeyDerivation extends ScryptKeyDerivation {
   static const MASTER_KEY_MAC_ALG = "SHA-256/HMAC";
 
-  Uint8List login;
-  Uint8List masterKey;
+  late Uint8List login;
+  late Uint8List masterKey;
 
   ScryptWithMasterKeyDerivation(
       int n, r, p, Uint8List login, Uint8List masterKey)
@@ -36,7 +36,7 @@ class ScryptWithMasterKeyDerivation extends ScryptKeyDerivation {
     composedRawSalt.fillRange(0, composedRawSalt.length, 0);
 
     var scryptParameters =
-        ScryptParameters(n, r, p, keyLengthBytes, composedSalt);
+        ScryptParameters(n, r, p, keyLengthBytes, Uint8List.fromList(composedSalt));
     var scrypt = Scrypt();
     scrypt.init(scryptParameters);
 
@@ -48,6 +48,6 @@ class ScryptWithMasterKeyDerivation extends ScryptKeyDerivation {
     var digest = hmacSha256.convert(masterKey);
     key.fillRange(0, key.length, 0);
 
-    return digest.bytes;
+    return Uint8List.fromList(digest.bytes);
   }
 }

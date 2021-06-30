@@ -49,7 +49,7 @@ void main() {
     var keyPair = await EcDSAKeyPair.fromPrivateKeySeed(privateKeySeed);
     var privateKey = keyPair.privateKey;
     keyPair.destroy();
-    expect(List.of(List.generate(privateKey.length, (index) => 0)), privateKey);
+    expect(List.of(List.generate(privateKey!.length, (index) => 0)), privateKey);
   });
 
   test('isDestroyedTrue', () async {

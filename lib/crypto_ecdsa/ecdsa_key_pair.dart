@@ -6,7 +6,7 @@ import 'package:cryptography/helpers.dart';
 class EcDSAKeyPair {
   static final algorithm = Ed25519();
   SimplePublicKey publicKey;
-  List<int> privateKey;
+  List<int>? privateKey;
   Uint8List seed;
 
   EcDSAKeyPair(this.publicKey, this.privateKey, this.seed);
@@ -49,7 +49,7 @@ class EcDSAKeyPair {
 
   ///Destroys keypair's private key by filling it content with zeros
   destroy() {
-    privateKey.fillRange(0, privateKey.length, 0);
+    privateKey?.fillRange(0, privateKey!.length, 0);
     seed.fillRange(0, seed.length, 0);
     privateKey = null;
   }

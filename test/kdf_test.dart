@@ -10,7 +10,7 @@ void main() {
   int r = 8;
   int p = 1;
   int keyLength = 32;
-  List<int> passphrase = Uint8List.fromList('qwe123'.codeUnits);
+  Uint8List passphrase = Uint8List.fromList('qwe123'.codeUnits);
   Uint8List salt = base64Decode('67ufG1N/Rf+j2ugDaXaopw==');
 
   test('kdf', () {

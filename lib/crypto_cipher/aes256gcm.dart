@@ -6,7 +6,7 @@ import 'package:pointycastle/block/modes/gcm.dart';
 
 ///Represents AES-256-GCM cipher.
 class Aes256GCM {
-  Uint8List iv;
+  late Uint8List iv;
 
   /// Creates AES-256-GCM cipher initialized with given IV.
   /// [iv] is non-empty byte array of initialization vector

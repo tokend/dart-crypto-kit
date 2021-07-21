@@ -7,9 +7,31 @@ class EcDSAKeyPair {
   static final algorithm = Ed25519();
   SimplePublicKey publicKey;
   List<int>? privateKey;
-  Uint8List seed;
+  Uint8List? seed;
 
   EcDSAKeyPair(this.publicKey, this.privateKey, this.seed);
+
+  /// Signs given data with private key if keypair has it
+  Future<List> sign(Uint8List data) async {
+    var keyPair = await algorithm.newKeyPairFromSeed(seed!);
+    var signature = await algorithm.sign(data.toList(), keyPair: keyPair);
+
+    return signature.bytes;
+  }
+
+  ///Destroys keypair's private key by filling it content with zeros
+  destroy() {
+    privateKey?.fillRange(0, privateKey!.length, 0);
+    seed!.fillRange(0, seed!.length, 0);
+    privateKey = null;
+  }
+
+  ///Returns [true] if keypair private key is destroyed
+  ///
+  ///See [EcDSAKeyPair.destroy]
+  bool isDestroyed() {
+    return privateKey == null;
+  }
 
   /// Creates keypair from given 32 byte seed for given curve.
   /// Original seed will be duplicated.
@@ -39,25 +61,9 @@ class EcDSAKeyPair {
         signature: Signature(signature, publicKey: publicKey));
   }
 
-  /// Signs given data with private key if keypair has it
-  Future<List> sign(Uint8List data) async {
-    var keyPair = await algorithm.newKeyPairFromSeed(seed);
-    var signature = await algorithm.sign(data.toList(), keyPair: keyPair);
-
-    return signature.bytes;
-  }
-
-  ///Destroys keypair's private key by filling it content with zeros
-  destroy() {
-    privateKey?.fillRange(0, privateKey!.length, 0);
-    seed.fillRange(0, seed.length, 0);
-    privateKey = null;
-  }
-
-  ///Returns [true] if keypair private key is destroyed
-  ///
-  ///See [EcDSAKeyPair.destroy]
-  bool isDestroyed() {
-    return privateKey == null;
+  /// Creates 'verify-only' keypair from 32 bytes of public key for given curve.
+  static EcDSAKeyPair fromPublicKeyBytes(Uint8List bytes) {
+    return EcDSAKeyPair(
+        SimplePublicKey(bytes, type: KeyPairType.ed25519), null, null);
   }
 }

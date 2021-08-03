@@ -11,8 +11,14 @@ class EcDSAKeyPair {
 
   EcDSAKeyPair(this.publicKey, this.privateKey, this.seed);
 
+  bool get canSign => privateKey != null && seed != null;
+
   /// Signs given data with private key if keypair has it
   Future<List> sign(Uint8List data) async {
+    if (!canSign) {
+      throw Exception(
+          'Key pair has no private key and can not be used for signing');
+    }
     var keyPair = await algorithm.newKeyPairFromSeed(seed!);
     var signature = await algorithm.sign(data.toList(), keyPair: keyPair);
 
@@ -22,7 +28,7 @@ class EcDSAKeyPair {
   ///Destroys keypair's private key by filling it content with zeros
   destroy() {
     privateKey?.fillRange(0, privateKey!.length, 0);
-    seed!.fillRange(0, seed!.length, 0);
+    seed?.fillRange(0, seed!.length, 0);
     privateKey = null;
   }
 

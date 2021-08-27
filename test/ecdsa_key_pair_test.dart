@@ -1,13 +1,13 @@
 import 'dart:typed_data';
 
-import 'package:base16/base16.dart';
+import 'package:convert/convert.dart';
 import 'package:dart_crypto_kit/crypto_ecdsa/ecdsa_key_pair.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   var privateKeySeed = new List.generate(32, (index) => index);
   Uint8List data = Uint8List.fromList('TokenD is awesome'.codeUnits);
-  var dataSignature = base16decode(
+  var dataSignature =  hex.decode(
       "B0B890056CCBA3B3188EFF742F581EC08F0540706C9AA83B2B669E58F5E488DD892FD543F9C9182F6E6CBA013D3953CADD2D9EDF2938A45918F063FCA01A0B0A");
 
   test('from private key seed', () async {

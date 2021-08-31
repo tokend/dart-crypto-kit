@@ -11,10 +11,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  pointycastle:
-    git:
-      url: https://github.com/bcgit/pc-dart.git
-      ref: master
+  pointycastle: ^3.3.2
+
   cryptography: any
 
 dependency_overrides:
